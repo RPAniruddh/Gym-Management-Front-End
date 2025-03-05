@@ -42,7 +42,10 @@ export default function MemberInfo() {
   }, []);
 
   const handleUpdateMember = async () => {
-    navigate('/updateMember', { state: { member } });
+    if (confirm('Are you sure you want to update the Member Details?')){
+      navigate('/updateMember', { state: { member } });
+    }
+   
   };
 
   return (

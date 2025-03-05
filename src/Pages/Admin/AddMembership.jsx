@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import axiosInstance from '../../AxiosInstance';
 
 export const AddMembership = ({ memberId }) => {
     const [error, setError] = useState(null);
+
     const addMembership = () => {
         const selectedType = document.getElementById('membershipType').value;
-        const token = localStorage.getItem('jwtToken');
-        axios.post(`http://localhost:1235/memberships/${memberId}`, null, {
-            params: { type: selectedType },
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
+    
+        axiosInstance.post(`/memberships/${memberId}`, null, {
+            params: { type: selectedType }
         })
             .then(response => {
                 alert("Membership added successfully!");

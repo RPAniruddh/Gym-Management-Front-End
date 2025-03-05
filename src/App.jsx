@@ -15,6 +15,8 @@ import UpdateForm from './Components/UpdateMember'
 import UserWorkouts from './Components/UserWorkouts'
 import Fitness from './Components/Fitness'
 import UserRegistrationForm from './Pages/User/UserRegistrationForm'
+import About  from './Pages/About'
+import NotFound from './Pages/NotFound'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -22,8 +24,10 @@ function App() {
   return (
     <Routes>
       <Route path='/' Component={Home}></Route>
+      <Route path='*' Component={NotFound}></Route>
       <Route path='/signUp' Component={SignUp}></Route>
       <Route path='/signIn' Component={SignIn}></Route>
+      <Route path='/About' Component={About}></Route>
       <Route path='/registrationForm' Component={RegistrationFrom}></Route>
       <Route path='/userRegistrationForm' Component={UserRegistrationForm}></Route>
       <Route path='/admin' Component={Admin}></Route>

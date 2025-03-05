@@ -9,7 +9,7 @@ export default function Admin() {
   const navigate = useNavigate();
 
   const handleAddMember = () => {
-    navigate('/registrationForm');
+    navigate('/signUp');
   };
 
   return (

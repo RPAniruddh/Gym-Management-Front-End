@@ -33,11 +33,13 @@ const ShowMembers = () => {
     };
 
     const handleDelete = async (memberId) => {
-        try {
-            await axiosInstance.delete(`/members/delete/${memberId}`);
-            setMembers(members.filter(member => member.id !== memberId));
-        } catch (error) {
-            console.error('Error deleting member:', error);
+        if (confirm('Are you sure you want to delete this Member?')){
+            try {
+                await axiosInstance.delete(`/members/delete/${memberId}`);
+                setMembers(members.filter(member => member.id !== memberId));
+            } catch (error) {
+                console.error('Error deleting member:', error);
+            }
         }
     };
 

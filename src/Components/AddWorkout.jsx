@@ -20,6 +20,8 @@ const AddWorkout = () => {
             });
             console.log(response.data);
             alert('Workout added successfully!');
+            window.location.reload();
+
         } catch (error) {
             console.error('There was an error adding the workout!', error);
         }
@@ -30,7 +32,7 @@ const AddWorkout = () => {
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="workoutName" className="form-label">Add the workout you want to do</label>
-                    <input type="text" className="form-control" id="workoutName" name="workoutName" placeholder="Enter workout name" />
+                    <input type="text" className="form-control" id="workoutName" name="workoutName" placeholder="Enter workout name" maxLength="15" required />
                 </div>
                 <button type="submit" className="btn btn-primary">Add Workout</button>
             </form>

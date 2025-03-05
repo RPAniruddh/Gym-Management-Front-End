@@ -1,7 +1,9 @@
-import React from 'react'
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 const NavBar = () => {
+  const isLoggedIn = !!localStorage.getItem('jwtToken'); // Check if JWT token exists
+
   return (
     <nav className="navbar navbar-expand-lg fixed-top" aria-label="Tenth navbar example" style={{ backgroundColor: 'beige' }}>
       <div className="container-fluid">
@@ -14,28 +16,34 @@ const NavBar = () => {
             <li className="nav-item">
               <Link className="nav-link active" aria-current="page" to="/About">About</Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link active" to="/signIn">Sign In</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link active" to="/signUp">Sign Up</Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                className="nav-link active"
-                to="/"
-                onClick={() => {
-                  localStorage.clear();
-                }}
-              >
-                Sign Out
-              </Link>
-            </li>
+            {!isLoggedIn && (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link active" to="/signIn">Sign In</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link active" to="/signUp">Sign Up</Link>
+                </li>
+              </>
+            )}
+            {isLoggedIn && (
+              <li className="nav-item">
+                <Link
+                  className="nav-link active"
+                  to="/"
+                  onClick={() => {
+                    localStorage.clear();
+                  }}
+                >
+                  Sign Out
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default NavBar;    
+export default NavBar;

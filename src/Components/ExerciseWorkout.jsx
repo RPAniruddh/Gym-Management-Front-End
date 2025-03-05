@@ -16,14 +16,22 @@ export const ExerciseWorkout = () => {
     try {
       const response = await axiosInstance.post(url, null);
 
-      if (response.status !== 200) {
-        throw new Error('Network response was not ok');
+      if (response.status === 200) {
+          console.log('Success:', response.data);
+          alert('Request was successful!');
+          window.location.reload();
+      } else {
+          alert('ID not present. Please check the ID and try again.');
+          throw new Error('Network response was not ok');
       }
-
-      console.log('Success:', response.data);
-    } catch (error) {
+  } catch (error) {
+      if (error.response && error.response.status === 404) {
+          alert("Resource not found. Please check the ID's and try again.");
+      } else {
+          alert('An error occurred. Please try again later.');
+      }
       console.error('Error:', error);
-    }
+  }
   }
 
   return (
@@ -33,25 +41,25 @@ export const ExerciseWorkout = () => {
         <div className="row mb-3">
           <div className="col-md-6">
             <label htmlFor="workoutId" className="form-label">Workout ID:</label>
-            <input type="text" className="form-control" id="workoutId" name="workoutId" />
+            <input type="number" className="form-control" id="workoutId" maxLength="5" name="workoutId" required />
           </div>
           <div className="col-md-6">
             <label htmlFor="exerciseId" className="form-label">Exercise ID:</label>
-            <input type="text" className="form-control" id="exerciseId" name="exerciseId" />
+            <input type="number" className="form-control" id="exerciseId" maxLength="5" name="exerciseId" required />
           </div>
         </div>
         <div className="row mb-3">
           <div className="col-md-4">
             <label htmlFor="sets" className="form-label">Sets:</label>
-            <input type="number" className="form-control" id="sets" name="sets" />
+            <input type="number" className="form-control" id="sets" maxLength="5" name="sets" required />
           </div>
           <div className="col-md-4">
             <label htmlFor="reps" className="form-label">Reps:</label>
-            <input type="number" className="form-control" id="reps" name="reps" />
+            <input type="number" className="form-control" id="reps" maxLength="5" name="reps" required />
           </div>
           <div className="col-md-4">
             <label htmlFor="weight" className="form-label">Weight:</label>
-            <input type="number" className="form-control" id="weight" name="weight" />
+            <input type="number" className="form-control" id="weight" maxLength="5" name="weight" required />
           </div>
         </div>
         <button type="submit" className="btn btn-primary">Submit</button>

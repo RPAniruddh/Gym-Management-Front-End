@@ -1,7 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import NavBar from '../Components/NavBar'
+import Footer from '../Components/Footer'
 
 export default function SignUp() {
+
+
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -11,7 +15,7 @@ export default function SignUp() {
       name: formData.get('name'),
       email: formData.get('email'),
       password: formData.get('password'),
-      roles: formData.get('role'),
+      roles: 'User',
     };
 
     console.log(JSON.stringify(data));
@@ -51,11 +55,12 @@ export default function SignUp() {
   };
 
   return (
+    <>
     <div className="container col-xl-10 col-xxl-8 px-4 py-5">
       <div className="row align-items-center g-lg-5 py-5">
         <div className="col-lg-7 text-center text-lg-start">
-          <h1 className="display-4 fw-bold lh-1 text-body-emphasis mb-3">Vertically centered hero sign-up form</h1>
-          <p className="col-lg-10 fs-4">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+          <h1 className="display-4 fw-bold lh-1 text-body-emphasis mb-3">Join Our Gym</h1>
+          <p className="col-lg-10 fs-4">Whether you're starting out or leveling up, we're here to inspire and guide you. Join us today and become the best version of yourself!</p>
         </div>
         <div className="col-md-10 mx-auto col-lg-5">
           <form className="p-4 p-md-5 border rounded-3 bg-body-tertiary" onSubmit={handleSubmit}>
@@ -71,17 +76,12 @@ export default function SignUp() {
               <input type="password" className="form-control" id="floatingPassword" name="password" placeholder="Password" />
               <label htmlFor="floatingPassword">Password</label>
             </div>
-            <div className="form-floating mb-3">
-              <select className="form-control" id="floatingSelect" name="role" aria-label="Role">
-                <option value="User">User</option>
-                <option value="Admin">Admin</option>
-              </select>
-              <label htmlFor="floatingSelect">Role</label>
-            </div>
             <button className="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
           </form>
         </div>
       </div>
     </div>
+    <Footer />
+    </>
   );
 }

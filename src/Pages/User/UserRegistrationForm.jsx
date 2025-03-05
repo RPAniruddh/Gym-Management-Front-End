@@ -58,7 +58,7 @@ const UserRegistrationForm = () => {
               <div className="row g-3">
                 <div className="col-sm-6">
                   <label htmlFor="firstName" className="form-label">First name</label>
-                  <input type="text" className="form-control" id="firstName" placeholder="John" value={formData.firstName} onChange={handleChange} required />
+                  <input type="text" className="form-control" id="firstName" placeholder="John" maxLength="10" value={formData.firstName} onChange={handleChange} required />
                   <div className="invalid-feedback">
                     Valid first name is required.
                   </div>
@@ -66,7 +66,7 @@ const UserRegistrationForm = () => {
 
                 <div className="col-sm-6">
                   <label htmlFor="lastName" className="form-label">Last name</label>
-                  <input type="text" className="form-control" id="lastName" placeholder="Doe" value={formData.lastName} onChange={handleChange} required />
+                  <input type="text" className="form-control" id="lastName" placeholder="Doe" maxLength="10" value={formData.lastName} onChange={handleChange} required />
                   <div className="invalid-feedback">
                     Valid last name is required.
                   </div>
@@ -74,7 +74,7 @@ const UserRegistrationForm = () => {
 
                 <div className="col-12">
                   <label htmlFor="email" className="form-label">Email</label>
-                  <input type="email" className="form-control" id="email" placeholder="you@example.com" value={formData.email} onChange={handleChange} required readOnly />
+                  <input type="email" className="form-control" id="email" placeholder="you@example.com" maxLength="20" value={formData.email} onChange={handleChange} required readOnly />
                   <div className="invalid-feedback">
                     Please enter a valid email address for shipping updates.
                   </div>
@@ -82,7 +82,7 @@ const UserRegistrationForm = () => {
 
                 <div className="col-12">
                   <label htmlFor="phoneNumber" className="form-label">Phone Number</label>
-                  <input type="tel" className="form-control" id="phoneNumber" placeholder="123-456-7890" value={formData.phoneNumber} onChange={handleChange} required />
+                  <input type="tel" className="form-control" id="phoneNumber" placeholder="1234567890" value={formData.phoneNumber} maxLength="10" onChange={handleChange} required />
                   <div className="invalid-feedback">
                     Please enter your phone number.
                   </div>

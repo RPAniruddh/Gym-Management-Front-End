@@ -1,34 +1,33 @@
 import axios from 'axios';
 import React from 'react'
 import { useLocation } from 'react-router-dom';
+import axiosInstance from '../AxiosInstance';
 const UpdateMember = () => {
 
   const location = useLocation();
   const member = location.state?.member || {};
 
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      try {
-        const token = localStorage.getItem('jwtToken');
-        const response = await axios.put(`http://localhost:1235/members/update/${member.id}`, formData, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+        const response = await axiosInstance.put(`/members/update/${member.id}`, formData, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
         });
 
         if (response.status === 200) {
-          alert('Member updated successfully');
-          window.history.back();
+            alert('Member updated successfully');
+            window.history.back();
         } else {
-          alert('Failed to update member');
+            alert('Failed to update member');
         }
-      } catch (error) {
+    } catch (error) {
         console.error('Error updating member:', error);
         alert('An error occurred while updating the member');
-      }
-    };
+    }
+};
 
 
 

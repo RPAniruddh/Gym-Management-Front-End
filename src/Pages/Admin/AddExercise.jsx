@@ -1,5 +1,6 @@
 import {React, useState} from 'react'
 import axios from 'axios';
+import axiosInstance from '../../AxiosInstance';
 
 const AddExercise = () => {
     const [exercise, setExercise] = useState({
@@ -18,13 +19,8 @@ const AddExercise = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const token = localStorage.getItem('jwtToken');
         try {
-            await axios.post('http://localhost:1235/fitness/exercises', exercise, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-            });
+            await axiosInstance.post('/fitness/exercises', exercise);
             alert('Exercise added successfully');
             window.history.back();
         } catch (error) {
@@ -51,6 +47,7 @@ const AddExercise = () => {
                                         name="name"
                                         value={exercise.name}
                                         onChange={handleChange}
+                                        required
                                     />
                                 </div>
                                 <div className="form-group">
@@ -62,6 +59,7 @@ const AddExercise = () => {
                                         name="category"
                                         value={exercise.category}
                                         onChange={handleChange}
+                                        required
                                     />
                                 </div>
                                 <div className="form-group">
@@ -73,6 +71,7 @@ const AddExercise = () => {
                                         name="muscleGroup"
                                         value={exercise.muscleGroup}
                                         onChange={handleChange}
+                                        required
                                     />
                                 </div>
                                 <button type="submit" className="btn btn-primary mt-5">Add Exercise</button>

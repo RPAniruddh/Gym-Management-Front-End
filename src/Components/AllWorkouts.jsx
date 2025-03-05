@@ -29,13 +29,15 @@ const AllWorkouts = () => {
     }
 
     const handleDelete = async (memberId, id) => {
-        try {
-            await axiosInstance.delete(`/fitness/workouts/member/${memberId}`);
-            setWorkouts(workouts.filter(workout => workout.id !== id));
-        } catch (error) {
-            console.error('There was an error deleting the workout!', error);
+        if (confirm('Are you sure you want to delete this workout?')) {
+            try {
+                await axiosInstance.delete(`/fitness/workouts/member/${memberId}`);
+                setWorkouts(workouts.filter(workout => workout.id !== id));
+            } catch (error) {
+                console.error('There was an error deleting the workout!', error);
+            }
         }
-    }
+    };
 
     const handleShowWorkout = (id) => {
         navigate(`/userWorkout?id=${id}`);

@@ -4,7 +4,8 @@ import axiosInstance from '../AxiosInstance';
 const Excercise = () => {
     const [exercises, setExercises] = useState([]);
     const role = localStorage.getItem('role');
-
+    console.log(role);
+    
 
     useEffect(() => {
         const fetchExercises = async () => {
@@ -28,12 +29,15 @@ const Excercise = () => {
     }
 
     const handleDelete = async (id) => {
-        try {
-            await axiosInstance.delete(`/fitness/exercises/${id}`);
-            setExercises(exercises.filter(exercise => exercise.id !== id));
-        } catch (error) {
-            console.error('There was an error deleting the exercise!', error);
+        if (confirm('Are you sure you want to delete this Exercise?')) {
+            try {
+                await axiosInstance.delete(`/fitness/exercises/${id}`);
+                setExercises(exercises.filter(exercise => exercise.id !== id));
+            } catch (error) {
+                console.error('There was an error deleting the exercise!', error);
+            }
         }
+
     }
 
     return (
@@ -47,7 +51,7 @@ const Excercise = () => {
                         <th>Category</th>
                         <th>Muscle Group</th>
                         <th>Created At</th>
-                        {role === 'Admin' && (
+                        {role.toLowerCase() === 'admin' && (
                             <th colSpan="2">Action</th>
                         )}
                     </tr>
@@ -60,10 +64,10 @@ const Excercise = () => {
                             <td>{exercise.category}</td>
                             <td>{exercise.muscleGroup}</td>
                             <td>{new Date(exercise.createdAt).toLocaleString()}</td>
-                            {role === 'Admin' && (
-                            <td>
-                                <button className="btn btn-danger btn-sm" onClick={() => handleDelete(exercise.id)}>Delete</button>
-                            </td>
+                            {role.toLowerCase() === 'admin' && (
+                                <td>
+                                    <button className="btn btn-danger btn-sm" onClick={() => handleDelete(exercise.id)}>Delete</button>
+                                </td>
                             )}
                         </tr>
                     ))}

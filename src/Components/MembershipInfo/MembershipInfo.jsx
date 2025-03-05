@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './MembershipInfo.css';
 import { AddMembership } from '../../Pages/Admin/AddMembership';
+import axiosInstance from '../../AxiosInstance';
 
 export default function MembershipInfo() {
     const [membershipDetails, setMembershipDetails] = useState(null);
@@ -9,16 +10,15 @@ export default function MembershipInfo() {
     const memberId = localStorage.getItem("memberId");
     const token = localStorage.getItem('jwtToken');
     const role = localStorage.getItem('role');
+    console.log(role);
 
 
     useEffect(() => {
         if (memberId) {
             const source = axios.CancelToken.source();
-
-            axios.get(`http://localhost:1235/memberships/${memberId}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                },
+            console.log("role", role);
+            
+            axiosInstance.get(`/memberships/${memberId}`, {
                 cancelToken: source.token
             })
                 .then(response => {
@@ -28,10 +28,10 @@ export default function MembershipInfo() {
                     if (axios.isCancel(error)) {
                         console.log('Request canceled', error.message);
                     } else if (error.response && error.response.status === 404) {
-                        if (role === 'Admin') {
+                        if (role.toLowerCase() === 'admin') {
                             setError(
                                 <div className='errorStyle'>
-                                    Wait for the Admin to add membership.
+                                    Add the Membership
                                     <AddMembership memberId={memberId} />
                                 </div>
                             );
@@ -47,7 +47,7 @@ export default function MembershipInfo() {
                         console.error(error);
                     }
                 });
-
+    
             return () => {
                 source.cancel("Component unmounted");
             };
@@ -55,21 +55,18 @@ export default function MembershipInfo() {
             setError("No membership ID found in local storage.");
         }
     }, []);
-
+    
     if (error) {
         return <div>{error}</div>;
     }
-
+    
     if (!membershipDetails) {
         return <div>Loading...</div>;
     }
-
-    const handleDeactivate = () => {
-        axios.post(`http://localhost:1235/memberships/${memberId}/deactivate`, {}, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
+ 
+const handleDeactivate = () => {
+    if (confirm('Are you sure you want to deactivate the plan?')) {
+        axiosInstance.post(`/memberships/${memberId}/deactivate`)
             .then(response => {
                 alert("Membership deactivated successfully!");
                 window.location.reload();
@@ -79,41 +76,35 @@ export default function MembershipInfo() {
                 console.error(error);
             });
     }
-
+}
     const handleRenew = () => {
-        axios.put(`http://localhost:1235/memberships/${memberId}/renew`, {}, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .then(response => {
-                alert("Membership renewed successfully!");
-                window.location.reload();
-            })
-            .catch(error => {
-                setError("There was an error renewing the membership!");
-                console.error(error);
-            });
+        if (confirm('Are you sure you want to renew the plan?')) {
+            axiosInstance.put(`/memberships/${memberId}/renew`)
+                .then(response => {
+                    alert("Membership renewed successfully!");
+                    window.location.reload();
+                })
+                .catch(error => {
+                    setError("There was an error renewing the membership!");
+                    console.error(error);
+                });
+        }
     }
 
     const handleChangePlan = () => {
-        const newType = membershipDetails.membershipType === 'BASIC' ? 'PREMIUM' : 'BASIC';
-
-        axios.put(`http://localhost:1235/memberships/${memberId}/upgrade?newType=${newType}`, {}, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-            .then(response => {
-                alert(`Membership upgraded to ${newType} successfully!`);
-                window.location.reload();
-            })
-            .catch(error => {
-                setError("There was an error upgrading the membership!");
-                console.error(error);
-            });
+        if (confirm('Are you sure you want to change the plan?')) {
+            const newType = membershipDetails.membershipType === 'BASIC' ? 'PREMIUM' : 'BASIC';
+            axiosInstance.put(`/memberships/${memberId}/upgrade?newType=${newType}`)
+                .then(response => {
+                    alert(`Membership upgraded to ${newType} successfully!`);
+                    window.location.reload();
+                })
+                .catch(error => {
+                    setError("There was an error upgrading the membership!");
+                    console.error(error);
+                });
+        }
     }
-       
 
     return (
         <div className="container mt-5">
@@ -128,7 +119,7 @@ export default function MembershipInfo() {
                         <p className="card-text"><strong>Created At:</strong> {new Date(membershipDetails.createdAt).toLocaleString()}</p>
                     </div>
                 </div>
-                {role === 'Admin' && (
+                {role.toLowerCase() === 'admin' && (
                     <div className='errorStyle'>
                         <p>Want to update membership details?</p>
                         <div className="buttonContainerStyle">

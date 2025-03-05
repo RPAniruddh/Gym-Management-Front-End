@@ -23,9 +23,9 @@ const axiosInstance = axios.create({
       (response) => response, // If successful, return response
       (error) => {
         if (error.response) {
-          if (error.response.status === 401) {
+          if (error.response.status === 403) {
             alert("Session expired! Redirecting to login...");
-            window.location.href = "/login";
+            window.location.href = "/signIn";
           } else if (error.response.status === 500) {
             alert("Server error! Please try again later.");
           }
