@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import axiosInstance from '../../AxiosInstance';
+import { toast } from 'react-toastify';
 
 export const AddMembership = ({ memberId }) => {
     const [error, setError] = useState(null);
@@ -12,7 +13,7 @@ export const AddMembership = ({ memberId }) => {
             params: { type: selectedType }
         })
             .then(response => {
-                alert("Membership added successfully!");
+                toast.success("Membership added successfully!");
                 console.log("Membership ID:", response.data.id);
                 window.location.reload();
                 setError(null);

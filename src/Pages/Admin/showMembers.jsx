@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../../AxiosInstance'; // Adjust the path as necessary
-
+import axiosInstance from '../../AxiosInstance'; 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserMinus } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+ 
 const ShowMembers = () => {
     const [members, setMembers] = useState([]);
     const navigate = useNavigate();
@@ -46,7 +49,7 @@ const ShowMembers = () => {
     return (
         <div style={{ marginTop: '30px' }}>
             <h3>Gym Members</h3>
-            <table className="table table-striped table-bordered">
+            <table className="table table-hover table-bordered">
                 <thead className="thead-dark">
                     <tr>
                         <th>ID</th>
@@ -58,7 +61,7 @@ const ShowMembers = () => {
                         <th colSpan="2">Actions</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className='table-group-divider'>
                     {members.map((member) => (
                         <tr key={member.id}>
                             <td>{member.id}</td>
@@ -68,10 +71,10 @@ const ShowMembers = () => {
                             <td>{member.email}</td>
                             <td>{new Date(member.dateOfBirth).toLocaleDateString()}</td>
                             <td>
-                                <button className="btn btn-sm btn-success" onClick={() => handleProfile(member.id)}>Show Profile</button>
+                                <button className="btn btn-sm btn-success" onClick={() => handleProfile(member.id)}><FontAwesomeIcon icon={faUser} /> Profile</button>
                             </td>
                             <td>
-                                <button className="btn btn-sm btn-danger" onClick={() => handleDelete(member.id)}>Delete</button>
+                                <button className="btn btn-sm btn-danger" onClick={() => handleDelete(member.id)}><FontAwesomeIcon icon={faUserMinus} /> </button>
                             </td>
                         </tr>
                     ))}

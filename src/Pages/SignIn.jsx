@@ -2,8 +2,10 @@ import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import NavBar from '../Components/NavBar'
+import NavBar from '../Components/NavBar/NavBar'
 import Footer from '../Components/Footer'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignIn = () => {
 
@@ -43,6 +45,7 @@ const SignIn = () => {
             }
           });
           if (userResponse.data) {
+            toast.success("welcome Back")
             navigate('/user');
           } else {
             navigate('/userRegistrationForm');
@@ -56,7 +59,7 @@ const SignIn = () => {
       console.log(response.data);
     } catch (error) {
       if (error.response && error.response.status === 403) {
-        alert('Either email or password is wrong, please check again.');
+        toast.error('Either email or password is wrong, please check again.');
       } else {
         console.error('There was an error!', error);
       }

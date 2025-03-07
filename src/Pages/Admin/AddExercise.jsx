@@ -1,6 +1,7 @@
 import {React, useState} from 'react'
 import axios from 'axios';
 import axiosInstance from '../../AxiosInstance';
+import { toast } from 'react-toastify';
 
 const AddExercise = () => {
     const [exercise, setExercise] = useState({
@@ -21,10 +22,10 @@ const AddExercise = () => {
         e.preventDefault();
         try {
             await axiosInstance.post('/fitness/exercises', exercise);
-            alert('Exercise added successfully');
+            toast.success('Exercise added successfully');
             window.history.back();
         } catch (error) {
-            console.error('There was an error adding the exercise!', error);
+            toast.error('There was an error adding the exercise!', error);
         }
     };
 

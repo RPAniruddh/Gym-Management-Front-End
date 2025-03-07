@@ -34,7 +34,7 @@ const UserWorkouts = () => {
     return (
         <div>
             <h2>User Workouts</h2>
-            <table className="table table-striped table-bordered">
+            <table className="table table-hover">
                 <thead className="thead-dark">
                     <tr>
                         <th>ID</th>
@@ -44,7 +44,7 @@ const UserWorkouts = () => {
                         <th>Weight</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className='table-group-divider'>
                     {workouts.map(workout => (
                         <tr key={workout.id}>
                             <td>{workout.id}</td>

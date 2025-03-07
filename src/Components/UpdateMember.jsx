@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react'
 import { useLocation } from 'react-router-dom';
 import axiosInstance from '../AxiosInstance';
+import { toast } from 'react-toastify';
 const UpdateMember = () => {
 
   const location = useLocation();
@@ -18,14 +19,14 @@ const UpdateMember = () => {
         });
 
         if (response.status === 200) {
-            alert('Member updated successfully');
+            toast.success('Details updated successfully');
             window.history.back();
         } else {
-            alert('Failed to update member');
+            toast.error('Failed to update member details');
         }
     } catch (error) {
         console.error('Error updating member:', error);
-        alert('An error occurred while updating the member');
+        toast.error('An error occurred while updating the member');
     }
 };
 

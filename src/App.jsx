@@ -19,7 +19,6 @@ import About  from './Pages/About'
 import NotFound from './Pages/NotFound'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <Routes>
@@ -38,6 +37,7 @@ function App() {
       <Route path='/updateMember' Component={UpdateForm}></Route>
       <Route path='/userWorkout' Component={UserWorkouts}></Route>
     </Routes>
+
   )
 }
 

@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../AxiosInstance';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBan } from "@fortawesome/free-solid-svg-icons";
+
 
 const Excercise = () => {
     const [exercises, setExercises] = useState([]);
@@ -43,7 +46,7 @@ const Excercise = () => {
     return (
         <div className="container mt-5">
             <h3>Exercise Available</h3>
-            <table className="table table-striped table-bordered">
+            <table className="table table-hover table-bordered">
                 <thead className="thead-dark">
                     <tr>
                         <th>ID</th>
@@ -56,7 +59,7 @@ const Excercise = () => {
                         )}
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className='table-group-divider'>
                     {exercises.map(exercise => (
                         <tr key={exercise.id}>
                             <td>{exercise.id}</td>
@@ -66,7 +69,7 @@ const Excercise = () => {
                             <td>{new Date(exercise.createdAt).toLocaleString()}</td>
                             {role.toLowerCase() === 'admin' && (
                                 <td>
-                                    <button className="btn btn-danger btn-sm" onClick={() => handleDelete(exercise.id)}>Delete</button>
+                                    <button className="btn btn-danger btn-sm" onClick={() => handleDelete(exercise.id)}><FontAwesomeIcon icon={faBan} /></button>
                                 </td>
                             )}
                         </tr>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import axiosInstance from '../../AxiosInstance';
+import { toast } from 'react-toastify';
 
 const RegistrationFrom = () => {
   const [formData, setFormData] = useState({
@@ -25,11 +26,11 @@ const RegistrationFrom = () => {
       console.log(formData);
       const response = await axiosInstance.post('/members/add', formData);
       console.log('Form submitted successfully:', response.data);
-      alert('Form submitted successfully!');
+      toast.success('Form submitted successfully!');
       window.history.back();
     } catch (error) {
       if (error.response && error.response.data.includes('Email already exists')) {
-        alert(error.response.data);
+        toast.error(error.response.data);
       } else {
         console.error('Error submitting form:', error);
       }

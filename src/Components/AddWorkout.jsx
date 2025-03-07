@@ -1,7 +1,9 @@
 import React from "react";
 import axiosInstance from "../AxiosInstance";
+import { toast } from "react-toastify";
+import AllWorkouts from "./AllWorkouts";
 
-const AddWorkout = () => {
+const AddWorkout = ({onWorkoutAdded}) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const workoutName = event.target.workoutName.value;
@@ -19,9 +21,8 @@ const AddWorkout = () => {
                 }
             });
             console.log(response.data);
-            alert('Workout added successfully!');
-            window.location.reload();
-
+            toast.success('Workout added successfully!');
+            onWorkoutAdded(); // Trigger the callback to notify that a workout was added
         } catch (error) {
             console.error('There was an error adding the workout!', error);
         }

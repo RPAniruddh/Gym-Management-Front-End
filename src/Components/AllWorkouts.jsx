@@ -1,8 +1,10 @@
 import { React, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../AxiosInstance';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBan, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
-const AllWorkouts = () => {
+const AllWorkouts = ({ isTrigger }) => {
     const [workouts, setWorkouts] = useState([]);
     const navigate = useNavigate();
     const memberId = localStorage.getItem('memberId');
@@ -18,7 +20,7 @@ const AllWorkouts = () => {
         };
 
         fetchWorkouts();
-    }, [memberId]);
+    }, [memberId, isTrigger]); // Re-fetch workouts when isTrigger changes
 
     if (workouts.length === 0) {
         return (
@@ -34,7 +36,7 @@ const AllWorkouts = () => {
                 await axiosInstance.delete(`/fitness/workouts/member/${memberId}`);
                 setWorkouts(workouts.filter(workout => workout.id !== id));
             } catch (error) {
-                console.error('There was an error deleting the workout!', error);
+                toast.error('There was an error deleting the workout!', error);
             }
         }
     };
@@ -46,7 +48,7 @@ const AllWorkouts = () => {
     return (
         <div className="container mt-5">
             <h3>All Member Workouts</h3>
-            <table className="table table-striped table-bordered">
+            <table className="table table-hover table-bordered">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -54,16 +56,16 @@ const AllWorkouts = () => {
                         <th colSpan="2">Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className='table-group-divider'>
                     {workouts.map(workout => (
                         <tr key={workout.id}>
                             <td>{workout.id}</td>
                             <td>{workout.workoutName}</td>
                             <td>
-                                <button className="btn btn-sm btn-success" onClick={() => handleShowWorkout(workout.id)}>Show Details</button>
+                                <button className="btn btn-sm btn-success" onClick={() => handleShowWorkout(workout.id)}><FontAwesomeIcon icon={faCircleInfo} size="lg" /></button>
                             </td>
                             <td>
-                                <button className="btn btn-sm btn-danger" onClick={() => handleDelete(workout.memberId, workout.id)}>Delete</button>
+                                <button className="btn btn-sm btn-danger" onClick={() => handleDelete(workout.memberId, workout.id)}><FontAwesomeIcon icon={faBan} size="lg" /></button>
                             </td>
                         </tr>
                     ))}

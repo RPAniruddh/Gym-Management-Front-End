@@ -35,8 +35,8 @@ export const ExerciseWorkout = () => {
   }
 
   return (
-    <div className="container mt-4" style={{ border: '1px solid black', padding: '10px' }}>
-      <div>ExerciseWorkout</div>
+    <div className="container mt-5" style={{ border: '1px solid black', padding: '10px' }}>
+      <div className='mb-4'><h6>Add Exercise to wokout</h6></div>
       <form onSubmit={handleSubmit}>
         <div className="row mb-3">
           <div className="col-md-6">

@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import NavBar from '../Components/NavBar'
+import NavBar from '../Components/NavBar/NavBar'
 import Footer from '../Components/Footer'
+import { toast } from 'react-toastify';
 
 export default function SignUp() {
 
@@ -45,6 +46,7 @@ export default function SignUp() {
 
       if (data.roles === 'User') {
         localStorage.setItem('email', data.email);
+        toast.success("You have been registered !!")
         navigate('/signIn');
       } else {
         navigate('/signIn');
