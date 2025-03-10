@@ -84,6 +84,7 @@ const SignIn = () => {
                   placeholder="name@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
                 <label htmlFor="floatingInput">Email address</label>
               </div>
@@ -95,6 +96,7 @@ const SignIn = () => {
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
                 <label htmlFor="floatingPassword">Password</label>
               </div>
