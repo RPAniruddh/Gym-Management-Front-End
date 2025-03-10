@@ -1,38 +1,14 @@
 import axios from 'axios';
-import React from 'react'
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import axiosInstance from '../AxiosInstance';
 import { toast } from 'react-toastify';
-const UpdateMember = () => {
 
+const UpdateMember = () => {
   const location = useLocation();
   const member = location.state?.member || {};
 
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-        const response = await axiosInstance.put(`/members/update/${member.id}`, formData, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (response.status === 200) {
-            toast.success('Details updated successfully');
-            window.history.back();
-        } else {
-            toast.error('Failed to update member details');
-        }
-    } catch (error) {
-        console.error('Error updating member:', error);
-        toast.error('An error occurred while updating the member');
-    }
-};
-
-
-
-  const [formData, setFormData] = React.useState({
+  const [formData, setFormData] = useState({
     firstName: member.firstName || '',
     lastName: member.lastName || '',
     email: member.email || '',
@@ -46,6 +22,27 @@ const UpdateMember = () => {
       ...prevData,
       [id]: value
     }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axiosInstance.put(`/members/update/${member.id}`, formData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.status === 200) {
+        toast.success('Details updated successfully');
+        window.history.back();
+      } else {
+        toast.error('Failed to update member details');
+      }
+    } catch (error) {
+      console.error('Error updating member:', error);
+      toast.error('An error occurred while updating the member');
+    }
   };
 
   return (
@@ -64,7 +61,7 @@ const UpdateMember = () => {
               <div className="row g-3">
                 <div className="col-sm-6">
                   <label htmlFor="firstName" className="form-label">First name</label>
-                  <input type="text" className="form-control" id="firstName" placeholder="John" value={formData.firstName} onChange={handleChange} required="" />
+                  <input type="text" className="form-control" id="firstName" placeholder="John" value={formData.firstName} onChange={handleChange} required />
                   <div className="invalid-feedback">
                     Valid first name is required.
                   </div>
@@ -72,7 +69,7 @@ const UpdateMember = () => {
 
                 <div className="col-sm-6">
                   <label htmlFor="lastName" className="form-label">Last name</label>
-                  <input type="text" className="form-control" id="lastName" placeholder="Doe" value={formData.lastName} onChange={handleChange} required="" />
+                  <input type="text" className="form-control" id="lastName" placeholder="Doe" value={formData.lastName} onChange={handleChange} required />
                   <div className="invalid-feedback">
                     Valid last name is required.
                   </div>
@@ -88,15 +85,15 @@ const UpdateMember = () => {
 
                 <div className="col-12">
                   <label htmlFor="phoneNumber" className="form-label">Phone Number</label>
-                  <input type="tel" className="form-control" id="phoneNumber" placeholder="123-456-7890" value={formData.phoneNumber} onChange={handleChange} required="" />
+                  <input type="tel" className="form-control" id="phoneNumber" placeholder="123-456-7890" value={formData.phoneNumber} onChange={handleChange} required />
                   <div className="invalid-feedback">
-                    Please enter your phone number.
+                    Valid phone number is required.
                   </div>
                 </div>
 
                 <div className="col-12">
                   <label htmlFor="dateOfBirth" className="form-label">Date of birth</label>
-                  <input type="date" className="form-control" id="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} required="" />
+                  <input type="date" className="form-control" id="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} required />
                   <div className="invalid-feedback">
                     Please enter a valid date.
                   </div>
@@ -111,7 +108,7 @@ const UpdateMember = () => {
         </div>
       </main>
     </div>
-  )
-}
+  );
+};
 
 export default UpdateMember;

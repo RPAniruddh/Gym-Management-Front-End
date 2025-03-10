@@ -10,7 +10,7 @@ const Fitness = () => {
     const [isTrigger, setIsTrigger] = useState(false);
 
     const handleWorkoutAdded = () => {
-        setIsTrigger((prev) => !prev); // Toggle the isTrigger state to re-render AllWorkouts
+        setIsTrigger((prev) => !prev); 
     };
 
     console.log(isTrigger);
