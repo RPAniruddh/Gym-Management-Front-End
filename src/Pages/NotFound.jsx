@@ -3,7 +3,7 @@ import React from 'react';
 const NotFound = () => {
     return (
         <div className="p-5 text-center bg-body-tertiary rounded-3">
-            <svg className="bi mt-4 mb-3" style={{ color: 'var(--bs-indigo)' }} width="100" height="100">
+            <svg className="bi mt-4 mb-3" width="100" height="100">
                 <use xlinkHref="#bootstrap"></use>
             </svg>
             <h1 className="text-body-emphasis">404 - Page Not Found</h1>

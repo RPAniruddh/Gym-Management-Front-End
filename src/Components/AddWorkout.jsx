@@ -22,7 +22,7 @@ const AddWorkout = ({onWorkoutAdded}) => {
             });
             console.log(response.data);
             toast.success('Workout added successfully!');
-            onWorkoutAdded(); // Trigger the callback to notify that a workout was added
+            onWorkoutAdded();
         } catch (error) {
             console.error('There was an error adding the workout!', error);
         }

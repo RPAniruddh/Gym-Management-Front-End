@@ -12,22 +12,14 @@ export default function MembershipInfo() {
     const role = localStorage.getItem('role');
     console.log(role);
 
-
     useEffect(() => {
         if (memberId) {
-            const source = axios.CancelToken.source();
-            console.log("role", role);
-            
-            axiosInstance.get(`/memberships/${memberId}`, {
-                cancelToken: source.token
-            })
+            axiosInstance.get(`/memberships/${memberId}`)
                 .then(response => {
                     setMembershipDetails(response.data);
                 })
                 .catch(error => {
-                    if (axios.isCancel(error)) {
-                        console.log('Request canceled', error.message);
-                    } else if (error.response && error.response.status === 404) {
+                    if (error.response && error.response.status === 404) {
                         if (role.toLowerCase() === 'admin') {
                             setError(
                                 <div className='errorStyle'>
@@ -47,36 +39,33 @@ export default function MembershipInfo() {
                         console.error(error);
                     }
                 });
-    
-            return () => {
-                source.cancel("Component unmounted");
-            };
         } else {
             setError("No membership ID found in local storage.");
         }
     }, []);
-    
+
     if (error) {
         return <div>{error}</div>;
     }
-    
+
     if (!membershipDetails) {
         return <div>Loading...</div>;
     }
- 
-const handleDeactivate = () => {
-    if (confirm('Are you sure you want to deactivate the plan?')) {
-        axiosInstance.post(`/memberships/${memberId}/deactivate`)
-            .then(response => {
-                alert("Membership deactivated successfully!");
-                window.location.reload();
-            })
-            .catch(error => {
-                setError("There was an error deactivating the membership!");
-                console.error(error);
-            });
+
+    const handleDeactivate = () => {
+        if (confirm('Are you sure you want to deactivate the plan?')) {
+            axiosInstance.post(`/memberships/${memberId}/deactivate`)
+                .then(response => {
+                    alert("Membership deactivated successfully!");
+                    window.location.reload();
+                })
+                .catch(error => {
+                    setError("There was an error deactivating the membership!");
+                    console.error(error);
+                });
+        }
     }
-}
+
     const handleRenew = () => {
         if (confirm('Are you sure you want to renew the plan?')) {
             axiosInstance.put(`/memberships/${memberId}/renew`)

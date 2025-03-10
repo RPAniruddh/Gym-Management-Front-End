@@ -1,34 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import NavBar from '../Components/NavBar/NavBar'
-import Footer from '../Components/Footer'
+import NavBar from '../Components/NavBar/NavBar';
+import Footer from '../Components/Footer';
 import { toast } from 'react-toastify';
 
 export default function SignUp() {
-
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
 
   const navigate = useNavigate();
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target);
     const data = {
-      name: formData.get('name'),
-      email: formData.get('email'),
-      password: formData.get('password'),
+      ...formData,
       roles: 'User',
     };
 
     console.log(JSON.stringify(data));
 
     try {
-      const response = await fetch('http://localhost:9194/auth/new', {
-        method: 'POST',
+      const response = await axios.post('http://localhost:9194/auth/new', data, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
       });
+  
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -46,7 +54,7 @@ export default function SignUp() {
 
       if (data.roles === 'User') {
         localStorage.setItem('email', data.email);
-        toast.success("You have been registered !!")
+        toast.success("You have been registered !!");
         navigate('/signIn');
       } else {
         navigate('/signIn');
@@ -58,32 +66,56 @@ export default function SignUp() {
 
   return (
     <>
-    <div className="container col-xl-10 col-xxl-8 px-4 py-5">
-      <div className="row align-items-center g-lg-5 py-5">
-        <div className="col-lg-7 text-center text-lg-start">
-          <h1 className="display-4 fw-bold lh-1 text-body-emphasis mb-3">Join Our Gym</h1>
-          <p className="col-lg-10 fs-4">Whether you're starting out or leveling up, we're here to inspire and guide you. Join us today and become the best version of yourself!</p>
-        </div>
-        <div className="col-md-10 mx-auto col-lg-5">
-          <form className="p-4 p-md-5 border rounded-3 bg-body-tertiary" onSubmit={handleSubmit}>
-            <div className="form-floating mb-3">
-              <input type="text" className="form-control" id="floatingName" name="name" placeholder="John Doe" />
-              <label htmlFor="floatingName">Name</label>
-            </div>
-            <div className="form-floating mb-3">
-              <input type="email" className="form-control" id="floatingEmail" name="email" placeholder="name@example.com" />
-              <label htmlFor="floatingEmail">Email address</label>
-            </div>
-            <div className="form-floating mb-3">
-              <input type="password" className="form-control" id="floatingPassword" name="password" placeholder="Password" />
-              <label htmlFor="floatingPassword">Password</label>
-            </div>
-            <button className="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
-          </form>
+      <div className="container col-xl-10 col-xxl-8 px-4 py-5">
+        <div className="row align-items-center g-lg-5 py-5">
+          <div className="col-lg-7 text-center text-lg-start">
+            <h1 className="display-4 fw-bold lh-1 text-body-emphasis mb-3">Join Our Gym</h1>
+            <p className="col-lg-10 fs-4">Whether you're starting out or leveling up, we're here to inspire and guide you. Join us today and become the best version of yourself!</p>
+          </div>
+          <div className="col-md-10 mx-auto col-lg-5">
+            <form className="p-4 p-md-5 border rounded-3 bg-body-tertiary" onSubmit={handleSubmit}>
+              <div className="form-floating mb-3">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="floatingName"
+                  name="name"
+                  placeholder="John Doe"
+                  value={formData.name}
+                  onChange={handleChange}
+                />
+                <label htmlFor="floatingName">Name</label>
+              </div>
+              <div className="form-floating mb-3">
+                <input
+                  type="email"
+                  className="form-control"
+                  id="floatingEmail"
+                  name="email"
+                  placeholder="name@example.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+                <label htmlFor="floatingEmail">Email address</label>
+              </div>
+              <div className="form-floating mb-3">
+                <input
+                  type="password"
+                  className="form-control"
+                  id="floatingPassword"
+                  name="password"
+                  placeholder="Password"
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+                <label htmlFor="floatingPassword">Password</label>
+              </div>
+              <button className="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-    <Footer />
+      <Footer />
     </>
   );
 }

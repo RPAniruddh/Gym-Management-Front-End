@@ -24,24 +24,6 @@ const About = () => {
                         </ul>
                     </p>
                 </div>
-
-                <h2 className="text-center py-4">Our Services</h2>
-                <div className="row justify-content-center">
-                    {[
-                        { title: "Personal Training", imgSrc: "https://images.pexels.com/photos/1552249/pexels-photo-1552249.jpeg?auto=compress&cs=tinysrgb&w=600" },
-                        { title: "Nutrition Counseling", imgSrc: "https://images.pexels.com/photos/593451/pexels-photo-593451.jpeg?auto=compress&cs=tinysrgb&w=600" },
-                        { title: "Wellness Programs", imgSrc: "https://images.pexels.com/photos/4056723/pexels-photo-4056723.jpeg?auto=compress&cs=tinysrgb&w=600" }
-                    ].map((service, index) => (
-                        <div key={index} className="col-md-3 col-sm-6 mb-3 d-flex align-items-stretch">
-                            <div className="card h-100 shadow-sm">
-                                <img className="card-img-top img-fluid" src={service.imgSrc} alt={service.title} style={{ height: '160px', objectFit: 'cover' }} />
-                                <div className="card-body">
-                                    <h5 className="card-title text-center">{service.title}</h5>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
             </div>
             <Footer />
         </>
